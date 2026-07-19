@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gatinhos Aleatórios</title>
+    <link rel="stylesheet" href="bootstrap-5.3.8-dist/css/bootstrap.min.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="axios.min.js"></script>
+    <style>
+        body {
+            margin: 5px;
+            padding: 0;
+            font-family: cursive;
+            text-decoration: none;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("./midia/foto-gato.jpg");
+            background-size: cover;
+            background-position: center;
+            opacity: 0.4;   
+            z-index: -1; 
+        }
+        .cat-img {
+            width: 320px;
+            max-height: 350px;
+            border-radius: 10px;
+            margin: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .video {
+            text-decoration: none;
+            color: black;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app" class="container text-center mt-5">
+    <a href="gato.html" class="video" target="_blank">°</a>
+    <h1 class="mb-4">Você gosta de gatos?</h1>
+    <div class="justify-content-center align-items-center m-2">
+        <button class="btn btn-primary m-3" @click="addCat">Siiiimmm 😺</button>
+        <a href="cachorro.html" class="btn btn-secondary" target="_blank">Não 😈</a>
+        <button class="btn btn-danger m-3" @click="excluir()" v-if="tem > 0">Excluir 😢</button>
+    </div>
+    <div class="d-flex flex-wrap justify-content-center">
+        <img 
+            v-for="(cat, index) in cats" 
+            :key="index" 
+            :src="cat.url" 
+            alt="Gato"
+            class="cat-img"
+        >
+    </div>
+</div>
+<script>
+const app = Vue.createApp({
+    data() {
+        return {
+            cats: [],
+            tem: 0,
+        };
+    },
+    methods: {
+        async addCat() {
+            try {
+                const response = await axios.get("https://api.thecatapi.com/v1/images/search");
+                this.cats.push(response.data[0]); 
+                this.tem++;
+            } catch (error) {
+                console.error(error);
+                alert("Erro ao carregar gatinho 😿");
+            }
+        },
+        excluir: function(index) {
+            if (confirm("Tem certeza que deseja excluir um gatinho?")) {
+                this.cats.splice(index, 1);
+                this.tem--;
+        }
+        }
+    }
+});
+app.mount("#app");
+</script>
+</body>
+</html>

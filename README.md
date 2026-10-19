@@ -2,9 +2,7 @@
 
 ## Projeto testando API em sites
 
-https://gatos.site.je/
-
-Site feito como trabalho de faculdade na matéria de Programaçâo Web. Hospedado na infinityfree.
+Site feito como trabalho de faculdade na disciplina de Programaçâo Web.
 
 Tecnologias usadas:  
 -HTML  
